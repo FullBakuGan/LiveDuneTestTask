@@ -32,6 +32,7 @@ export default function FormGroups() {
   };
 
   return (
+  <>
     <form className="form-items" onSubmit={handleSubmit}>
       <div className="form-content">
         <input 
@@ -52,8 +53,16 @@ export default function FormGroups() {
         />
       </div>
       {error && <div className="error-message">{error}</div>}
+
+      <button type="submit" className="enter desktop-only">Войти в аккаунт</button>
+      <a href="#" className="forgot-password desktop-only">Забыли пароль?</a>
+    </form>
+    
+    <div className="mobile-login-footer">
       <button type="submit" className="enter">Войти в аккаунт</button>
       <a href="#" className="forgot-password">Забыли пароль?</a>
-    </form>
-  );
+    </div>
+  </>
+);
+
 }

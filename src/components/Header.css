@@ -38,3 +38,40 @@
     border: 0;
     cursor: pointer;
 }
+
+
+@media (max-width: 768px) {
+
+  .mobile-hidden {
+    display: none;
+  }
+
+  .header-left {
+    font-size: 24px;
+    margin-bottom: 12px;
+    text-align: center;
+    left: 16px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-right: 16px;
+  }
+
+  .header-right > p {
+    width: auto;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .registration {
+    width: 113px;
+    height: 40px;
+    max-width: 300px;
+    font-size: 14px;
+    padding: 12px 0;
+  }
+}
+

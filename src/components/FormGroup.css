@@ -57,3 +57,46 @@
   margin-bottom: 10px;
 }
 
+.mobile-login-footer {
+  display: none;
+}
+
+.desktop-only {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .desktop-only {
+     display: none;
+  }
+
+  .form-content {
+    width: 343px;
+  }
+
+  .mobile-login-footer {
+    position: fixed;
+    bottom: 130px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+  }
+
+   .mobile-login-footer .enter {
+    position: fixed;
+    width: 343px;
+    bottom: 200px;
+    height: 56px;
+    border-radius: 64px;
+    background-color: #4E74F5;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .form-items {
+    gap: 16px;
+  }
+}

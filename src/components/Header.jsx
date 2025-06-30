@@ -8,7 +8,7 @@ export default function Header(){
                 <h5>LIVEDUNE</h5>
             </div>
             <div class = "header-right">
-                <p>У вас нет аккаунта?</p>
+                <p className="mobile-hidden">У вас нет аккаунта?</p>
                 <button class = "registration">Регистрация</button>
             </div>
         </div>
