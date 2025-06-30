@@ -1,0 +1,40 @@
+.header-container{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.header-left{
+    position: relative;
+    width: 142.95px;
+    color: #F90043;
+    left: 54px;
+    font-size: 30px;
+}
+
+.header-right{
+    display: flex;
+    gap: 20px;
+    padding-right: 54px;
+}
+
+.header-right>p{
+    position: relative;
+    width: 132px;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0px;
+    color: #999999;
+    font-family: 'Open Sans';
+    cursor: pointer;
+}
+
+.registration{
+    position: relative;
+    width: 170px;
+    border-radius: 100px;
+    background-color: #4E74F5;
+    color: white;
+    border: 0;
+    cursor: pointer;
+}
