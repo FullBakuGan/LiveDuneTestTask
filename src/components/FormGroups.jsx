@@ -26,6 +26,14 @@ export default function Form() {
       }
     }
 
+    if (formData.email) {
+    const emailChek = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailChek.test(formData.email)) {
+      setError('Введите корректный E-mail');
+      return;
+    }
+  }
+
     if (isLogin) {
       if (
         formData.email !== config.correctEmail ||
