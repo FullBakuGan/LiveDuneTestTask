@@ -5,6 +5,7 @@ import App from './App'
 import Login from './pages/Login'
 import './index.css'
 import Registration from './pages/Registration'
+import ForgotPassword from './pages/ForgotPassword'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: '/registration',
     element: <Registration />
+  },
+  {
+    path: '/forgotPassword',
+    element: <ForgotPassword />
   }
 ])
 

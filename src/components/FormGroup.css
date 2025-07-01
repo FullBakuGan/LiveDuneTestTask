@@ -77,6 +77,47 @@
   display: block;
 }
 
+.forgot-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.forgot-image {
+  margin-bottom: 20px;
+}
+
+.forgot-title {
+  padding-top: 30px;
+  font-family: 'Open Sans';
+  line-height: 100%;
+  letter-spacing: 0px;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.forgot-subtitle {
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 30px;
+}
+
+.cancel-button{
+  border: none;
+  color: #999999;
+  cursor: pointer;
+}
+
+.centered-form {
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 @media (max-width: 768px) {
   .form-content {
     width: 343px;

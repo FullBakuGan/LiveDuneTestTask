@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FormConfigs } from '../data';
 import './FormGroup.css';
 
 export default function Form() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isLogin = location.pathname === '/';
+  const isForgotPassword = location.pathname === '/forgotPassword';
 
-  const config = isLogin ? FormConfigs.login : FormConfigs.registration;
+  const config = isForgotPassword
+    ? FormConfigs.forgotPassword
+    : isLogin
+    ? FormConfigs.login
+    : FormConfigs.registration;
 
   const [formData, setFormData] = useState({});
   const [error, setError] = useState('');
@@ -27,12 +33,12 @@ export default function Form() {
     }
 
     if (formData.email) {
-    const emailChek = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailChek.test(formData.email)) {
-      setError('Введите корректный E-mail');
-      return;
+      const emailChek = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailChek.test(formData.email)) {
+        setError('Введите корректный E-mail');
+        return;
+      }
     }
-  }
 
     if (isLogin) {
       if (
@@ -53,8 +59,15 @@ export default function Form() {
     setError('');
   };
 
+  const handleCancel = () => {
+    navigate('/');
+  };
+
   return (
-    <form className="form-items" onSubmit={handleSubmit}>
+    <form
+      className={`form-items ${isForgotPassword ? 'centered-form' : ''}`}
+      onSubmit={handleSubmit}
+    >
       {config.fields.map(field => (
         <div className="form-content" key={field}>
           <input
@@ -75,14 +88,24 @@ export default function Form() {
 
       <button type="submit" className="enter">{config.buttonText}</button>
 
-      {!isLogin && (
+      {!isLogin && !isForgotPassword && (
         <p className="terms">
           Создавая аккаунт, я согласен с <a href="/terms">условиями оферты</a>
         </p>
       )}
 
       {isLogin && (
-        <a href="/reset-password" className="forgot-password">Забыли пароль?</a>
+        <a href="/forgotPassword" className="forgot-password">Забыли пароль?</a>
+      )}
+
+      {isForgotPassword && (
+        <button
+          type="button"
+          className="cancel-button"
+          onClick={handleCancel}
+        >
+          Отменить
+        </button>
       )}
     </form>
   );
