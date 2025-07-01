@@ -27,11 +27,14 @@
     color: #999999;
     font-family: 'Open Sans';
     cursor: pointer;
+    text-align: center;
+    top: 5px;
 }
 
 .registration{
     position: relative;
     width: 170px;
+    height: 51px;
     border-radius: 100px;
     background-color: #4E74F5;
     color: white;

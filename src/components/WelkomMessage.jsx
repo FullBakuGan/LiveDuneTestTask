@@ -1,5 +1,3 @@
-import { LoginMessage } from "../data";
-
 export default function WelkomMessage({title, message}) {
   return (
     <div>

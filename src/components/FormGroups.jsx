@@ -1,68 +1,81 @@
-import './FormGroup.css'
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { FormConfigs } from '../data';
+import './FormGroup.css';
 
-export default function FormGroups() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function Form() {
+  const location = useLocation();
+  const isLogin = location.pathname === '/';
+
+  const config = isLogin ? FormConfigs.login : FormConfigs.registration;
+
+  const [formData, setFormData] = useState({});
   const [error, setError] = useState('');
 
-  const CORRECT_EMAIL = 'example@example.com';
-  const CORRECT_PASSWORD = 'password2021';
+  const handleChange = (field) => (e) => {
+    setFormData(prev => ({ ...prev, [field]: e.target.value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    if (!email) {
-      setError("Введите email");
-      return;
+
+    for (const field of config.fields) {
+      if (!formData[field]) {
+        setError(`Введите ${field}`);
+        return;
+      }
     }
 
-    if (!password) {
-      setError("Введите пароль");
-      return;
+    if (isLogin) {
+      if (
+        formData.email !== config.correctEmail ||
+        formData.password !== config.correctPassword
+      ) {
+        setError('Неверный email или пароль');
+        return;
+      }
+    } else {
+      if (formData.password !== formData.confirmPassword) {
+        setError('Пароли не совпадают');
+        return;
+      }
     }
 
-    if (email !== CORRECT_EMAIL || password !== CORRECT_PASSWORD) {
-      setError('Неверный email или пароль');
-      return;
-    }
-
-    alert('Авторизация успешна!');
+    alert(config.successMessage);
     setError('');
   };
 
   return (
-  <>
     <form className="form-items" onSubmit={handleSubmit}>
-      <div className="form-content">
-        <input 
-          type="email" 
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Введите почту..."
-          required
-        />
-      </div>
-      <div className="form-content">
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Введите пароль..."
-          required
-        />
-      </div>
+      {config.fields.map(field => (
+        <div className="form-content" key={field}>
+          <input
+            type={field.includes('password') ? 'password' : 'text'}
+            placeholder={`Введите ${field}...`}
+            value={formData[field] || ''}
+            onChange={handleChange(field)}
+            required
+          />
+        </div>
+      ))}
+
+      {!isLogin && (
+        <p className="promokod mobile-only">У меня есть промокод</p>
+      )}
+
       {error && <div className="error-message">{error}</div>}
 
-      <button type="submit" className="enter desktop-only">Войти в аккаунт</button>
-      <a href="#" className="forgot-password desktop-only">Забыли пароль?</a>
-    </form>
-    
-    <div className="mobile-login-footer">
-      <button type="submit" className="enter">Войти в аккаунт</button>
-      <a href="#" className="forgot-password">Забыли пароль?</a>
-    </div>
-  </>
-);
+      <button type="submit" className="enter">{config.buttonText}</button>
 
+      {!isLogin && (
+        <p className="terms">
+          Создавая аккаунт, я согласен с <a href="/terms">условиями оферты</a>
+        </p>
+      )}
+
+      {isLogin && (
+        <a href="/reset-password" className="forgot-password">Забыли пароль?</a>
+      )}
+    </form>
+  );
 }
