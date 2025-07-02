@@ -1,21 +1,20 @@
-.header-container{
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 54px;
 }
 
-.header-left{
-    position: relative;
-    width: 142.95px;
-    color: #F90043;
-    left: 54px;
-    font-size: 30px;
+.header-left {
+  color: #F90043;
+  font-size: 30px;
 }
 
-.header-right{
-    display: flex;
-    gap: 20px;
-    padding-right: 54px;
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .header-right>p{
@@ -42,7 +41,16 @@
     cursor: pointer;
 }
 
-
+.confirmEmail {
+  height: 51px;
+  border-radius: 100px;
+  background-color: transparent;
+  color: #999999;
+  font-size: 14px;
+  font-family: 'Open Sans';
+  border: none;
+  cursor: pointer;
+}
 @media (max-width: 768px) {
 
   .mobile-hidden {

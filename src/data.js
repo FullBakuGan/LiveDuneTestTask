@@ -1,7 +1,3 @@
-
-
-
-
 export const LoginMessage = [
   {
     title: "Войти",
@@ -24,19 +20,26 @@ export const ForgotMessage = [
   }
 ]
 
+export const ConfirmEmailMessage = [
+  {
+    title: "Подтвердите ваш Email",
+    message: "Игорь, на ваш E-mail отправлено письмо со ссылкой для подтверждения. Перейдите по ней, чтобы активировать вашу учетную запись и получить 7 дней бесплатного доступа."
+  }
+]
+
 export const HeaderItems = [
   {
     pagetitle: "Вход в систему",
     leftItem: "LIVEDUNE",
     register: "уже есть аккаунт?",
-    enter: "Войти",
+    enter: "Регистрация",
     path: "/"
   },
   {
     pagetitle: "Регистрация",
     leftItem: "LIVEDUNE",
     register: "у вас нет аккаунта?",
-    enter: "Регистрация",
+    enter: "Вход",
     path: "/registration"
   },
   {
@@ -45,6 +48,13 @@ export const HeaderItems = [
     register: "",
     enter: "",
     path: "/forgotPassword"
+  },
+  {
+    pagetitle: "Подтверждение почты",
+    leftItem: "LIVEDUNE",
+    register: "",
+    enter: "Выйти",
+    path: "/confirmEmail"
   }
 ];
 
@@ -63,7 +73,11 @@ export const FormConfigs = {
   },
   forgotPassword: {
     fields: ['email'],
-    buttonText: 'Отправить',
+    buttonText: 'Восстановить пароль',
     successMessage: 'Письмо с восстановлением отправлено!',
   },
+  confirmEmail: {
+    buttonText: "Перейти к почте",
+    successMessage: "Письмо отправлено!"
+  }
 };

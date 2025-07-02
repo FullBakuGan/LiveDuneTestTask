@@ -41,6 +41,7 @@
   color: #4E74F5;
   cursor: pointer;
   margin-top: 10px;
+  border: none;
 }
 
 .error-message {
@@ -83,6 +84,7 @@
   align-items: center;
   margin-top: 40px;
   text-align: center;
+   margin-top: 100px;
 }
 
 .forgot-image {
@@ -116,6 +118,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 
 
 @media (max-width: 768px) {
