@@ -14,9 +14,9 @@ export const RegisterMessage = [
 
 export const ForgotMessage = [
   {
-    image: '/Vector.png',
     title: 'Восстановить пароль',
     message: 'Введите e-mail, на который регестрировались ранее',
+    image: '/Vector.png',
   }
 ]
 
@@ -24,6 +24,21 @@ export const ConfirmEmailMessage = [
   {
     title: "Подтвердите ваш Email",
     message: "Игорь, на ваш E-mail отправлено письмо со ссылкой для подтверждения. Перейдите по ней, чтобы активировать вашу учетную запись и получить 7 дней бесплатного доступа."
+  }
+]
+
+export const NoEmailMessage = [
+  {
+    title: "Мне не пришло письмо",
+    message: 'Письмо может прийти с задержкой в 5-10 минут. Также проверьте разные папки почтового ящика (актуально для gmail.com) и папку "Спам".Если письмо все же не пришло, повторите попытку или напишите об этом в тех.поддержку support@livedune.ru и мы активируем ваш аккаунт.'
+  }
+]
+
+export const SendMessageText = [
+  {
+    image: '/Emoji.png',
+    title: "Письмо отправлено",
+    message: "На указанный вами e-mail было отправлено письмо для смены пароля"
   }
 ]
 
@@ -55,6 +70,20 @@ export const HeaderItems = [
     register: "",
     enter: "Выйти",
     path: "/confirmEmail"
+  },
+  {
+    pagetitle: "Не пришло письмо",
+    leftItem: "LIVEDUNE",
+    register: "",
+    enter: "Выйти",
+    path: "/noEmail"
+  },
+  {
+    pagetitle: "Письмо отправлено",
+    leftItem: "LIVEDUNE",
+    register: "",
+    enter: "",
+    path: "/sendMessage"
   }
 ];
 
@@ -75,9 +104,21 @@ export const FormConfigs = {
     fields: ['email'],
     buttonText: 'Восстановить пароль',
     successMessage: 'Письмо с восстановлением отправлено!',
+    correctEmail: 'example@example.com',
+    
   },
   confirmEmail: {
     buttonText: "Перейти к почте",
-    successMessage: "Письмо отправлено!"
+    successMessage: "Письмо отправлено!",
+    
+  },
+  isNoEmail: {
+    fields: ["email"],
+    buttonText: 'Отправить заново',
+    successMessage: "Письмо отправлено повторно, проверьте ещё раз почту!",
+    correctEmail: 'example@example.com'
+  },
+  sendMessage: {
+    buttonText: 'Вернуться на главную',
   }
 };

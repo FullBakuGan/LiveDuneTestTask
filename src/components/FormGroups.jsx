@@ -6,25 +6,28 @@ import './FormGroup.css';
 export default function Form() {
   const location = useLocation();
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({});
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const isLogin = location.pathname === '/';
   const isForgotPassword = location.pathname === '/forgotPassword';
   const isRegistration = location.pathname === '/registration';
   const isConfirmEmail = location.pathname === '/confirmEmail';
+  const isNoEmail = location.pathname === '/noEmail';
+  const isSendMessage = location.pathname === '/sendMessage';
 
- const config = isConfirmEmail
-  ? FormConfigs.confirmEmail
-  : isForgotPassword
-  ? FormConfigs.forgotPassword
-  : isLogin
-  ? FormConfigs.login
-  : FormConfigs.registration;
-
-
-  
-
-  const [formData, setFormData] = useState({});
-  const [error, setError] = useState('');
+  const config = isSendMessage
+    ? FormConfigs.sendMessage
+    : isNoEmail
+    ? FormConfigs.isNoEmail
+    : isConfirmEmail
+    ? FormConfigs.confirmEmail
+    : isForgotPassword
+    ? FormConfigs.forgotPassword
+    : isLogin
+    ? FormConfigs.login
+    : FormConfigs.registration;
 
   const handleChange = (field) => (e) => {
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
@@ -33,7 +36,7 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    for (const field of config.fields) {
+    for (const field of config.fields || []) {
       if (!formData[field]) {
         setError(`Введите ${field}`);
         return;
@@ -45,6 +48,13 @@ export default function Form() {
       if (!emailCheck.test(formData.email)) {
         setError('Введите корректный E-mail');
         return;
+      }
+
+      if ((isForgotPassword || isNoEmail) && config.correctEmail) {
+        if (formData.email !== config.correctEmail) {
+          setError('Этот email не зарегистрирован');
+          return;
+        }
       }
     }
 
@@ -65,12 +75,19 @@ export default function Form() {
       }
     }
 
-    alert(config.successMessage);
     setError('');
+    setLoading(true);
 
-    if (isRegistration || isForgotPassword) {
-      navigate('/confirmEmail');
-    }
+    setTimeout(() => {
+      setLoading(false);
+      alert(config.successMessage);
+
+      if (isForgotPassword) {
+        navigate('/sendMessage');
+      } else if (isRegistration) {
+          navigate('/confirmEmail');
+        }
+    }, 2000);
   };
 
   const handleCancel = () => {
@@ -79,24 +96,22 @@ export default function Form() {
 
   return (
     <form
-  className={`form-items ${isForgotPassword ? 'centered-form' : ''} ${isConfirmEmail ? 'form-confirm' : ''}`}
-  onSubmit={handleSubmit}
->
-
+      className={`form-items ${isForgotPassword ? 'centered-form' : ''} ${isConfirmEmail ? 'form-confirm' : ''}`}
+      onSubmit={handleSubmit}
+    >
+      
       {!isConfirmEmail &&
-      config.fields.map((field) => (
-        <div className="form-content" key={field}>
-          <input
-            type={field.includes('password') ? 'password' : 'text'}
-            placeholder={`Введите ${field}...`}
-            value={formData[field] || ''}
-            onChange={handleChange(field)}
-            required
-          />
-        </div>
-      ))}
-
-
+        config.fields?.map((field) => (
+          <div className="form-content" key={field}>
+            <input
+              type={field.includes('password') ? 'password' : 'text'}
+              placeholder={`Введите ${field}...`}
+              value={formData[field] || ''}
+              onChange={handleChange(field)}
+              required
+            />
+          </div>
+        ))}
 
       {isRegistration && (
         <p className="promokod mobile-only">У меня есть промокод</p>
@@ -104,9 +119,17 @@ export default function Form() {
 
       {error && <div className="error-message">{error}</div>}
 
-      <button type="submit" className="enter">
-        {config.buttonText}
+      <button type="submit" className="enter" onClick={() => navigate('/')} disabled={loading}>
+        {isForgotPassword && loading ? (
+          <span className="button-loader">
+            <div className="loader"></div>
+            Отправка...
+          </span>
+        ) : (
+          config.buttonText
+        )}
       </button>
+
 
       {isRegistration && (
         <p className="terms">
@@ -120,16 +143,16 @@ export default function Form() {
         </a>
       )}
 
-      {isForgotPassword && (
+      {(isForgotPassword || isNoEmail) && (
         <button type="button" className="cancel-button" onClick={handleCancel}>
           Отменить
         </button>
       )}
 
-      {isConfirmEmail &&(
-        <button type="button" className="forgot-password" onClick={handleCancel}>
+      {isConfirmEmail && (
+        <a href="/noEmail" className="forgot-password">
           Мне не пришло письмо
-        </button>
+        </a>
       )}
     </form>
   );

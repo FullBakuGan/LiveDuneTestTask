@@ -11,6 +11,7 @@ export default function Header() {
 
   const isResetPassword = pathname === '/forgotPassword';
   const isConfirmEmail = pathname === '/confirmEmail';
+  const isNoEmail = pathname === '/noEmail';
 
   return (
     <header>
@@ -21,29 +22,27 @@ export default function Header() {
 
         {!isResetPassword && (
           <div className="header-right">
-            {!isConfirmEmail && (
+            {!isConfirmEmail && !isNoEmail && (
               <>
                 {current.register && <p className="mobile-hidden">{current.register}</p>}
                 {current.enter && (
-                <Link to={
-                  pathname === '/' ? '/registration' :
-                  pathname === '/registration' ? '/' :
-                  '/'
-                }>
-    <button className="registration">{current.enter}</button>
-  </Link>
-)}
-
+                  <Link to={
+                    pathname === '/' ? '/registration' :
+                    pathname === '/registration' ? '/' :
+                    '/'
+                  }>
+                    <button className="registration">{current.enter}</button>
+                  </Link>
+                )}
               </>
             )}
-            {isConfirmEmail && (
+            {(isConfirmEmail || isNoEmail) && (
               <Link to="/">
                 <button className="confirmEmail">{current.enter}</button>
               </Link>
             )}
           </div>
         )}
-
       </div>
     </header>
   );

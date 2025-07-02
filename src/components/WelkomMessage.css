@@ -51,9 +51,28 @@ body[data-path="/confirmEmail"] .welkom-subtitle {
   margin-top: 200px; 
 }
 
+.welkom-image {
+  position: absolute;
+  margin-bottom: 100px;
+}
+
+.welkom-image img {
+  width: 80px;
+  height: auto;
+}
+
+
 @media(max-width: 768px){
   .welkom-title {
-    width: 200px;
+    width: 300px;
     margin: 0 auto;
   }
+
+  .confirm-offset {
+    margin-top: 100px; 
+  }
+
+  .welkom-image {
+  margin-bottom: 190px;
+}
 }

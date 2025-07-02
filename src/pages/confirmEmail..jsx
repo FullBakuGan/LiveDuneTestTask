@@ -1,8 +1,8 @@
-import Header from "./Header";
-import WelkomMessage from "./WelkomMessage";
+import Header from "../components/Header";
+import WelkomMessage from "../components/WelkomMessage";
 import { ConfirmEmailMessage, RegisterMessage } from "../data";
-import SocialItems from "./SocialItems"
-import FormGroups from "./FormGroups"
+import FormGroups from "../components/FormGroups"
+import './Login.css'; 
 
 export default function ConfirmEmail() {
     return(

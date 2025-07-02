@@ -6,7 +6,10 @@ import Login from './pages/Login'
 import './index.css'
 import Registration from './pages/Registration'
 import ForgotPassword from './pages/ForgotPassword'
-import ConfirmEmail from './components/confirmEmail.'
+import ConfirmEmail from './pages/confirmEmail.'
+import NoEmail from './pages/noEmail'
+import SendMessage from './pages/SendMessage'
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -27,6 +30,14 @@ const router = createBrowserRouter([
   {
     path: '/confirmEmail',
     element: <ConfirmEmail />
+  },
+  {
+    path: '/noEmail',
+    element: <NoEmail />
+  },
+  {
+    path: '/sendMessage',
+    element: <SendMessage />
   }
 ])
 
