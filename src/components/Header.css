@@ -1,15 +1,19 @@
+/* Основные стили хедера */
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 54px;
+  height: 80px;
+  box-sizing: border-box;
 }
 
-.header-left {
+.header-left h5 {
   color: #F90043;
   font-size: 30px;
+  font-weight: 700;
+  margin: 0;
 }
-
 
 .header-right {
   display: flex;
@@ -17,72 +21,53 @@
   gap: 20px;
 }
 
-.header-right>p{
-    position: relative;
-    width: 132px;
-    font-size: 14px;
-    line-height: 20px;
-    letter-spacing: 0px;
-    color: #999999;
-    font-family: 'Open Sans';
-    cursor: pointer;
-    text-align: center;
-    top: 5px;
+.header-right p {
+  font-size: 14px;
+  color: #999999;
+  font-family: 'Open Sans';
+  margin: 0;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
-.registration{
-    position: relative;
-    width: 170px;
-    height: 51px;
-    border-radius: 100px;
-    background-color: #4E74F5;
-    color: white;
-    border: 0;
-    cursor: pointer;
+.header-right p:hover {
+  color: #4E74F5;
 }
 
-.confirmEmail {
+.registration {
+  width: 170px;
   height: 51px;
   border-radius: 100px;
-  background-color: transparent;
-  color: #999999;
-  font-size: 14px;
-  font-family: 'Open Sans';
+  background-color: #4E74F5;
+  color: white;
   border: none;
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
 }
+
+.registration:hover {
+  background-color: #3a5bd9;
+}
+
+/* Мобильная версия */
 @media (max-width: 768px) {
+  .header-container {
+    padding: 0 20px;
+    height: 60px;
+  }
+
+  .header-left h5 {
+    font-size: 24px;
+  }
 
   .mobile-hidden {
     display: none;
   }
 
-  .header-left {
-    font-size: 24px;
-    margin-bottom: 12px;
-    text-align: center;
-    left: 16px;
-  }
-
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-right: 16px;
-  }
-
-  .header-right > p {
-    width: auto;
-    font-size: 14px;
-    text-align: center;
-  }
-
   .registration {
-    width: 113px;
+    width: 120px;
     height: 40px;
-    max-width: 300px;
     font-size: 14px;
-    padding: 12px 0;
   }
 }
-

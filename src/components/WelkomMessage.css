@@ -60,19 +60,25 @@ body[data-path="/confirmEmail"] .welkom-subtitle {
   width: 80px;
   height: auto;
 }
-
+.enter-offset {
+  margin-top: 100px; 
+}
 
 @media(max-width: 768px){
   .welkom-title {
     width: 300px;
     margin: 0 auto;
   }
-
-  .confirm-offset {
-    margin-top: 100px; 
-  }
-
+.enter-offset {
+  margin-top: -10px; 
+}
+.welkom-message.forgot {
+  margin-top: -40px;
+}
   .welkom-image {
   margin-bottom: 190px;
+}
+.welkom-text.text-offset {
+  margin-top: 30px;
 }
 }

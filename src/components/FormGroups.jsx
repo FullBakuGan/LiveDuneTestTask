@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
+import { setEmail, setPassword } from '../slices/authSlice';
 import { FormConfigs } from '../data';
 import './FormGroup.css';
 
 export default function Form() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({});
+
+  const [localFormData, setLocalFormData] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -30,28 +34,35 @@ export default function Form() {
     : FormConfigs.registration;
 
   const handleChange = (field) => (e) => {
-    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+    const value = e.target.value;
+    setLocalFormData((prev) => ({ ...prev, [field]: value }));
+    if (field === 'email') {
+      dispatch(setEmail(value));
+    }
+    if (field === 'password') {
+      dispatch(setPassword(value));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
 
     for (const field of config.fields || []) {
-      if (!formData[field]) {
+      if (!localFormData[field]) {
         setError(`Введите ${field}`);
         return;
       }
     }
 
-    if (formData.email) {
+    if (localFormData.email) {
       const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailCheck.test(formData.email)) {
+      if (!emailCheck.test(localFormData.email)) {
         setError('Введите корректный E-mail');
         return;
       }
-
       if ((isForgotPassword || isNoEmail) && config.correctEmail) {
-        if (formData.email !== config.correctEmail) {
+        if (localFormData.email !== config.correctEmail) {
           setError('Этот email не зарегистрирован');
           return;
         }
@@ -60,34 +71,36 @@ export default function Form() {
 
     if (isLogin) {
       if (
-        formData.email !== config.correctEmail ||
-        formData.password !== config.correctPassword
+        localFormData.email !== config.correctEmail ||
+        localFormData.password !== config.correctPassword
       ) {
         setError('Неверный email или пароль');
         return;
       }
     }
 
-    if (isRegistration && formData.confirmPassword !== undefined) {
-      if (formData.password !== formData.confirmPassword) {
+    if (isRegistration && localFormData.confirmPassword !== undefined) {
+      if (localFormData.password !== localFormData.confirmPassword) {
         setError('Пароли не совпадают');
         return;
       }
     }
 
-    setError('');
     setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       alert(config.successMessage);
 
       if (isForgotPassword) {
         navigate('/sendMessage');
       } else if (isRegistration) {
-          navigate('/confirmEmail');
-        }
-    }, 2000);
+        navigate('/confirmEmail');
+      }
+    } catch (err) {
+      setError('Произошла ошибка. Попробуйте позже.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCancel = () => {
@@ -99,28 +112,30 @@ export default function Form() {
       className={`form-items ${isForgotPassword ? 'centered-form' : ''} ${isConfirmEmail ? 'form-confirm' : ''}`}
       onSubmit={handleSubmit}
     >
-      
+
       {!isConfirmEmail &&
         config.fields?.map((field) => (
           <div className="form-content" key={field}>
             <input
               type={field.includes('password') ? 'password' : 'text'}
               placeholder={`Введите ${field}...`}
-              value={formData[field] || ''}
+              value={localFormData[field] || ''}
               onChange={handleChange(field)}
               required
             />
           </div>
         ))}
 
-      {isRegistration && (
-        <p className="promokod mobile-only">У меня есть промокод</p>
-      )}
-
+      {isRegistration && <p className="promokod mobile-only">У меня есть промокод</p>}
       {error && <div className="error-message">{error}</div>}
 
-      <button type="submit" className="enter" onClick={() => navigate('/')} disabled={loading}>
-        {isForgotPassword && loading ? (
+      <button
+        type="submit"
+        className="enter"
+        disabled={loading}
+        onClick={isSendMessage || isLogin ? handleCancel : undefined}
+      >
+        {loading ? (
           <span className="button-loader">
             <div className="loader"></div>
             Отправка...
@@ -129,18 +144,15 @@ export default function Form() {
           config.buttonText
         )}
       </button>
-
-
+        
       {isRegistration && (
         <p className="terms">
-          Создавая аккаунт, я согласен с <a href="/terms">условиями оферты</a>
+          Создавая аккаунт, я согласен с <a href="">условиями оферты</a>
         </p>
       )}
 
       {isLogin && (
-        <a href="/forgotPassword" className="forgot-password">
-          Забыли пароль?
-        </a>
+        <Link to="/forgotPassword" className="forgot-password">Забыли пароль?</Link>
       )}
 
       {(isForgotPassword || isNoEmail) && (
@@ -148,11 +160,9 @@ export default function Form() {
           Отменить
         </button>
       )}
-
+      
       {isConfirmEmail && (
-        <a href="/noEmail" className="forgot-password">
-          Мне не пришло письмо
-        </a>
+        <Link to="/noEmail" className="forgot-password">Мне не пришло письмо</Link>
       )}
     </form>
   );
