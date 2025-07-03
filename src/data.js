@@ -42,6 +42,13 @@ export const SendMessageText = [
   }
 ]
 
+export const SocialItemsImages = [
+  {
+    facebook: 'facebook-logo.svg',
+    google: 'google-logo.png'
+  }
+]
+
 export const HeaderItems = [
   {
     pagetitle: "Вход в систему",
