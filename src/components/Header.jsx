@@ -4,14 +4,14 @@ import './Header.css';
 
 export default function Header() {
   const location = useLocation();
-  const pathname = location.pathname;
+  const path = location.pathname.replace('/LiveDuneTestTask', '') || '/';
 
-  const current = HeaderItems.find(item => item.path === pathname);
+  const current = HeaderItems.find(item => item.path === path);
   if (!current) return null;
 
-  const isResetPassword = pathname === '/forgotPassword';
-  const isConfirmEmail = pathname === '/confirmEmail';
-  const isNoEmail = pathname === '/noEmail';
+  const isResetPassword = path === '/forgotPassword';
+  const isConfirmEmail = path === '/confirmEmail';
+  const isNoEmail = path === '/noEmail';
 
   return (
     <header>
@@ -27,8 +27,8 @@ export default function Header() {
                 {current.register && <p className="mobile-hidden">{current.register}</p>}
                 {current.enter && (
                   <Link to={
-                    pathname === '/' ? '/registration' :
-                    pathname === '/registration' ? '/' :
+                    path === '/' ? 'registration' :
+                    path === '/registration' ? '/' :
                     '/'
                   }>
                     <button className="registration">{current.enter}</button>

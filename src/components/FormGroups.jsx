@@ -14,12 +14,13 @@ export default function Form() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const isLogin = location.pathname === '/';
-  const isForgotPassword = location.pathname === '/forgotPassword';
-  const isRegistration = location.pathname === '/registration';
-  const isConfirmEmail = location.pathname === '/confirmEmail';
-  const isNoEmail = location.pathname === '/noEmail';
-  const isSendMessage = location.pathname === '/sendMessage';
+  const path = location.pathname.replace('/LiveDuneTestTask', '') || '/';
+  const isLogin = path === '/';
+  const isForgotPassword = path === '/forgotPassword';
+  const isRegistration = path === '/registration';
+  const isConfirmEmail = path === '/confirmEmail';
+  const isNoEmail = path === '/noEmail';
+  const isSendMessage = path === '/sendMessage';
 
   const config = isSendMessage
     ? FormConfigs.sendMessage
@@ -92,9 +93,9 @@ export default function Form() {
       alert(config.successMessage);
 
       if (isForgotPassword) {
-        navigate('/sendMessage');
+        navigate('sendMessage');
       } else if (isRegistration) {
-        navigate('/confirmEmail');
+        navigate('confirmEmail');
       }
     } catch (err) {
       setError('Произошла ошибка. Попробуйте позже.');
@@ -152,7 +153,7 @@ export default function Form() {
       )}
 
       {isLogin && (
-        <Link to="/forgotPassword" className="forgot-password">Забыли пароль?</Link>
+        <Link to="forgotPassword" className="forgot-password">Забыли пароль?</Link>
       )}
 
       {(isForgotPassword || isNoEmail) && (
@@ -162,7 +163,7 @@ export default function Form() {
       )}
       
       {isConfirmEmail && (
-        <Link to="/noEmail" className="forgot-password">Мне не пришло письмо</Link>
+        <Link to="noEmail" className="forgot-password">Мне не пришло письмо</Link>
       )}
     </form>
   );

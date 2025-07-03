@@ -3,14 +3,17 @@ import './WelkomMessage.css';
 
 export default function WelkomMessage({ title, message, image }) {
   const location = useLocation();
-  const isEnterPage = location.pathname === '/';
-  const isForgotPassword = location.pathname === '/forgotPassword';
-  const isConfirmEmail = location.pathname === '/confirmEmail';
-  const isNoEmail = location.pathname === '/noEmail';
-  const isSendMessage = location.pathname == '/sendMessage';
+  const path = location.pathname.replace('/LiveDuneTestTask', '') || '/';
+  
+  const isEnterPage = path === '/';
+  const isForgotPassword = path === '/forgotPassword';
+  const isConfirmEmail = path === '/confirmEmail';
+  const isNoEmail = path === '/noEmail';
+  const isSendMessage = path === '/sendMessage';
+
   return (
     <div className="welkom-message">
-      {isForgotPassword || isSendMessage && image && (
+      {(isForgotPassword || isSendMessage) && image && (
         <div className="welkom-image">
           <img src={image} alt="icon" />
         </div>

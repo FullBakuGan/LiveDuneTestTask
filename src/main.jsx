@@ -8,7 +8,7 @@ import App from './App';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
 import ForgotPassword from './pages/ForgotPassword';
-import ConfirmEmail from './pages/confirmEmail.';
+import ConfirmEmail from './pages/confirmEmail.jsx';
 import NoEmail from './pages/noEmail';
 import SendMessage from './pages/SendMessage';
 
@@ -22,7 +22,9 @@ const router = createBrowserRouter([
   { path: '/confirmEmail', element: <ConfirmEmail /> },
   { path: '/noEmail', element: <NoEmail /> },
   { path: '/sendMessage', element: <SendMessage /> },
-]);
+], {
+  basename: '/LiveDuneTestTask'
+});
 
 const root = createRoot(document.getElementById('root'));
 root.render(

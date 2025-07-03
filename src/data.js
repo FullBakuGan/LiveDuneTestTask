@@ -16,7 +16,7 @@ export const ForgotMessage = [
   {
     title: 'Восстановить пароль',
     message: 'Введите e-mail, на который регестрировались ранее',
-    image: '/Vector.png',
+    image: 'Vector.png',
   }
 ]
 
@@ -36,7 +36,7 @@ export const NoEmailMessage = [
 
 export const SendMessageText = [
   {
-    image: '/Emoji.png',
+    image: 'Emoji.png',
     title: "Письмо отправлено",
     message: "На указанный вами e-mail было отправлено письмо для смены пароля"
   }

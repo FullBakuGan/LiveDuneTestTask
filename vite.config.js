@@ -1,8 +1,14 @@
 import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: '/LiveDuneTestTask/', 
+  base: '/LiveDuneTestTask/',
+  plugins: [react()],
   build: {
-    outDir: 'docs' 
-  }
+    outDir: 'docs',
+    emptyOutDir: true, 
+  },
+  server: {
+    historyApiFallback: true 
+}
 })
