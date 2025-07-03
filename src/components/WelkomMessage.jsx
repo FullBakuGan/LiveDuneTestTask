@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import './WelkomMessage.css';
+import React from 'react';
 
 export default function WelkomMessage({ title, message, image }) {
   const location = useLocation();

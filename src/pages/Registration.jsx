@@ -3,6 +3,7 @@ import WelkomMessage from "../components/WelkomMessage";
 import { RegisterMessage } from "../data";
 import SocialItems from "../components/SocialItems"
 import FormGroups from "../components/FormGroups"
+import React from 'react';
 
 export default function Registration(){
     return(

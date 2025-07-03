@@ -1,4 +1,5 @@
 import './Social-items.css';
+import React from 'react';
 
 export default function SocialItems() {
   return (

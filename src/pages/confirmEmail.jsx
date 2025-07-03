@@ -3,6 +3,7 @@ import WelkomMessage from "../components/WelkomMessage";
 import { ConfirmEmailMessage, RegisterMessage } from "../data";
 import FormGroups from "../components/FormGroups"
 import './Login.css'; 
+import React from 'react';
 
 export default function ConfirmEmail() {
     return(
