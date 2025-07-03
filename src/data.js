@@ -48,42 +48,42 @@ export const HeaderItems = [
     leftItem: "LIVEDUNE",
     register: "уже есть аккаунт?",
     enter: "Регистрация",
-    path: "#/"
+    path: "/"
   },
   {
     pagetitle: "Регистрация",
     leftItem: "LIVEDUNE",
     register: "у вас нет аккаунта?",
     enter: "Вход",
-    path: "#/registration"
+    path: "/registration"
   },
   {
     pagetitle: "Восстановление пароля",
     leftItem: "LIVEDUNE",
     register: "",
     enter: "",
-    path: "#/forgotPassword"
+    path: "/forgotPassword"
   },
   {
     pagetitle: "Подтверждение почты",
     leftItem: "LIVEDUNE",
     register: "",
     enter: "Выйти",
-    path: "#/confirmEmail"
+    path: "/confirmEmail"
   },
   {
     pagetitle: "Не пришло письмо",
     leftItem: "LIVEDUNE",
     register: "",
     enter: "Выйти",
-    path: "#/noEmail"
+    path: "/noEmail"
   },
   {
     pagetitle: "Письмо отправлено",
     leftItem: "LIVEDUNE",
     register: "",
     enter: "",
-    path: "#/sendMessage"
+    path: "/sendMessage"
   }
 ];
 

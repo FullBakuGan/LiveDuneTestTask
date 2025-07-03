@@ -1,3 +1,4 @@
+// SocialItems.jsx
 import './Social-items.css';
 import React from 'react';
 

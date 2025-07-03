@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { setEmail, setPassword } from '../slices/authSlice';
 import { FormConfigs } from '../data';
@@ -14,14 +14,17 @@ export default function Form() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const hashPath = location.hash.replace('#', '') || '/';
-  const isLogin = hashPath === '/';
-  const isForgotPassword = hashPath === '/forgotPassword';
-  const isRegistration = hashPath === '/registration';
-  const isConfirmEmail = hashPath === '/confirmEmail';
-  const isNoEmail = hashPath === '/noEmail';
-  const isSendMessage = hashPath === '/sendMessage';
+  // ✅ Правильный путь
+  const path = location.pathname;
 
+  const isLogin = path === '/';
+  const isForgotPassword = path === '/forgotPassword';
+  const isRegistration = path === '/registration';
+  const isConfirmEmail = path === '/confirmEmail';
+  const isNoEmail = path === '/noEmail';
+  const isSendMessage = path === '/sendMessage';
+
+  // ✅ Конфиг по текущему пути
   const config = isSendMessage
     ? FormConfigs.sendMessage
     : isNoEmail
@@ -34,17 +37,15 @@ export default function Form() {
     ? FormConfigs.login
     : FormConfigs.registration;
 
+  // ✅ Обработка инпутов
   const handleChange = (field) => (e) => {
     const value = e.target.value;
     setLocalFormData((prev) => ({ ...prev, [field]: value }));
-    if (field === 'email') {
-      dispatch(setEmail(value));
-    }
-    if (field === 'password') {
-      dispatch(setPassword(value));
-    }
+    if (field === 'email') dispatch(setEmail(value));
+    if (field === 'password') dispatch(setPassword(value));
   };
 
+  // ✅ Обработка сабмита
   const handleSubmit = async (e) => {
   e.preventDefault();
   setError('');
@@ -65,7 +66,7 @@ export default function Form() {
       setLoading(false);
       return;
     }
-    
+
     if ((isForgotPassword || isNoEmail) && config.correctEmail) {
       if (localFormData.email !== config.correctEmail) {
         setError('Этот email не зарегистрирован');
@@ -76,27 +77,41 @@ export default function Form() {
   }
 
   if (isLogin) {
-    if (localFormData.email !== config.correctEmail || 
-        localFormData.password !== config.correctPassword) {
+    if (
+      localFormData.email !== config.correctEmail ||
+      localFormData.password !== config.correctPassword
+    ) {
       setError('Неверный email или пароль');
       setLoading(false);
       return;
     }
   }
 
-  if (isRegistration && localFormData.confirmPassword !== undefined) {
-    if (localFormData.password !== localFormData.confirmPassword) {
-      setError('Пароли не совпадают');
-      setLoading(false);
-      return;
-    }
+  if (
+    isRegistration &&
+    localFormData.confirmPassword !== undefined &&
+    localFormData.password !== localFormData.confirmPassword
+  ) {
+    setError('Пароли не совпадают');
+    setLoading(false);
+    return;
   }
 
   try {
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     alert(config.successMessage);
-    
+
+    // ✅ Навигация по страницам:
+    if (isLogin) {
+      navigate('/app');
+    } else if (isRegistration) {
+      navigate('/confirmEmail');
+    } else if (isForgotPassword || isNoEmail) {
+      navigate('/sendMessage');
+    } else if (isSendMessage) {
+      navigate('/');
+    }
+
   } catch (err) {
     setError('Произошла ошибка. Попробуйте позже.');
   } finally {
@@ -104,16 +119,19 @@ export default function Form() {
   }
 };
 
-  const handleCancel = () => {
-    navigate('/#');
-  };
+// Кнопка отмены
+const handleCancel = () => {
+  navigate('/');
+};
+
 
   return (
     <form
-      className={`form-items ${isForgotPassword ? 'centered-form' : ''} ${isConfirmEmail ? 'form-confirm' : ''}`}
+      className={`form-items ${isForgotPassword ? 'centered-form' : ''} ${
+        isConfirmEmail ? 'form-confirm' : ''
+      }`}
       onSubmit={handleSubmit}
     >
-
       {!isConfirmEmail &&
         config.fields?.map((field) => (
           <div className="form-content" key={field}>
@@ -145,7 +163,7 @@ export default function Form() {
           config.buttonText
         )}
       </button>
-        
+
       {isRegistration && (
         <p className="terms">
           Создавая аккаунт, я согласен с <a href="">условиями оферты</a>
@@ -153,7 +171,9 @@ export default function Form() {
       )}
 
       {isLogin && (
-        <Link to="#/forgotPassword" className="forgot-password">Забыли пароль?</Link>
+        <Link to="/forgotPassword" className="forgot-password">
+          Забыли пароль?
+        </Link>
       )}
 
       {(isForgotPassword || isNoEmail) && (
@@ -161,9 +181,11 @@ export default function Form() {
           Отменить
         </button>
       )}
-      
+
       {isConfirmEmail && (
-        <Link to="#/noEmail" className="forgot-password">Мне не пришло письмо</Link>
+        <Link to="/noEmail" className="forgot-password">
+          Мне не пришло письмо
+        </Link>
       )}
     </form>
   );
