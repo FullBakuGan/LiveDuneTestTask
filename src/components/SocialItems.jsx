@@ -2,19 +2,21 @@ import './Social-items.css';
 import React from 'react';
 
 export default function SocialItems() {
+  const baseUrl = '/LiveDuneTestTask';
+
   return (
     <div className="social-auth">
       <div className="social-icons">
         <div className="social-item facebook">
           <img 
-            src={`${process.env.PUBLIC_URL}/facebook-logo.svg`} 
+            src={`${baseUrl}/facebook-logo.svg`} 
             alt="Facebook" 
           />
           <span>Войти через Facebook</span>
         </div>
         <div className="social-item google">
           <img 
-            src={`${process.env.PUBLIC_URL}/google-logo.png`} 
+            src={`${baseUrl}/google-logo.png`} 
             alt="Google" 
           />
           <span>Войти через Google</span>
