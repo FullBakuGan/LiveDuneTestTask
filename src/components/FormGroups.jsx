@@ -14,7 +14,6 @@ export default function Form() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // ✅ Правильный путь
   const path = location.pathname;
 
   const isLogin = path === '/';
@@ -24,7 +23,6 @@ export default function Form() {
   const isNoEmail = path === '/noEmail';
   const isSendMessage = path === '/sendMessage';
 
-  // ✅ Конфиг по текущему пути
   const config = isSendMessage
     ? FormConfigs.sendMessage
     : isNoEmail
@@ -37,7 +35,6 @@ export default function Form() {
     ? FormConfigs.login
     : FormConfigs.registration;
 
-  // ✅ Обработка инпутов
   const handleChange = (field) => (e) => {
     const value = e.target.value;
     setLocalFormData((prev) => ({ ...prev, [field]: value }));
@@ -45,7 +42,6 @@ export default function Form() {
     if (field === 'password') dispatch(setPassword(value));
   };
 
-  // ✅ Обработка сабмита
   const handleSubmit = async (e) => {
   e.preventDefault();
   setError('');
@@ -101,7 +97,6 @@ export default function Form() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     alert(config.successMessage);
 
-    // ✅ Навигация по страницам:
     if (isLogin) {
       navigate('/app');
     } else if (isRegistration) {
@@ -119,7 +114,6 @@ export default function Form() {
   }
 };
 
-// Кнопка отмены
 const handleCancel = () => {
   navigate('/');
 };
