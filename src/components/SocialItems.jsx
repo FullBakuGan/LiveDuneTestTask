@@ -6,11 +6,11 @@ export default function SocialItems() {
     <div className="social-auth">
       <div className="social-icons">
         <div className="social-item facebook">
-          <img src={facebookLogo} alt="Facebook" /> 
+          <img src={`${process.env.PUBLIC_URL}/facebook-logo.svg`} alt="Facebook" />
           <span>Войти через Facebook</span>
         </div>
         <div className="social-item google">
-          <img src={googleLogo} alt="Google" />
+          <img src={`${process.env.PUBLIC_URL}/google-logo.png`} alt="Google" />
           <span>Войти через Google</span>
         </div>
       </div>
