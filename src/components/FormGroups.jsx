@@ -14,13 +14,13 @@ export default function Form() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const path = location.pathname.replace('/LiveDuneTestTask', '') || '/';
-  const isLogin = path === '/';
-  const isForgotPassword = path === '/forgotPassword';
-  const isRegistration = path === '/registration';
-  const isConfirmEmail = path === '/confirmEmail';
-  const isNoEmail = path === '/noEmail';
-  const isSendMessage = path === '/sendMessage';
+  const hashPath = location.hash.replace('#', '') || '/';
+  const isLogin = hashPath === '/';
+  const isForgotPassword = hashPath === '/forgotPassword';
+  const isRegistration = hashPath === '/registration';
+  const isConfirmEmail = hashPath === '/confirmEmail';
+  const isNoEmail = hashPath === '/noEmail';
+  const isSendMessage = hashPath === '/sendMessage';
 
   const config = isSendMessage
     ? FormConfigs.sendMessage
@@ -46,66 +46,66 @@ export default function Form() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+  e.preventDefault();
+  setError('');
+  setLoading(true);
 
-    for (const field of config.fields || []) {
-      if (!localFormData[field]) {
-        setError(`Введите ${field}`);
-        return;
-      }
-    }
-
-    if (localFormData.email) {
-      const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailCheck.test(localFormData.email)) {
-        setError('Введите корректный E-mail');
-        return;
-      }
-      if ((isForgotPassword || isNoEmail) && config.correctEmail) {
-        if (localFormData.email !== config.correctEmail) {
-          setError('Этот email не зарегистрирован');
-          return;
-        }
-      }
-    }
-
-    if (isLogin) {
-      if (
-        localFormData.email !== config.correctEmail ||
-        localFormData.password !== config.correctPassword
-      ) {
-        setError('Неверный email или пароль');
-        return;
-      }
-    }
-
-    if (isRegistration && localFormData.confirmPassword !== undefined) {
-      if (localFormData.password !== localFormData.confirmPassword) {
-        setError('Пароли не совпадают');
-        return;
-      }
-    }
-
-    setLoading(true);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      alert(config.successMessage);
-
-      if (isForgotPassword) {
-        navigate('sendMessage');
-      } else if (isRegistration) {
-        navigate('confirmEmail');
-      }
-    } catch (err) {
-      setError('Произошла ошибка. Попробуйте позже.');
-    } finally {
+  for (const field of config.fields || []) {
+    if (!localFormData[field]) {
+      setError(`Введите ${field}`);
       setLoading(false);
+      return;
     }
-  };
+  }
+
+  if (localFormData.email) {
+    const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailCheck.test(localFormData.email)) {
+      setError('Введите корректный E-mail');
+      setLoading(false);
+      return;
+    }
+    
+    if ((isForgotPassword || isNoEmail) && config.correctEmail) {
+      if (localFormData.email !== config.correctEmail) {
+        setError('Этот email не зарегистрирован');
+        setLoading(false);
+        return;
+      }
+    }
+  }
+
+  if (isLogin) {
+    if (localFormData.email !== config.correctEmail || 
+        localFormData.password !== config.correctPassword) {
+      setError('Неверный email или пароль');
+      setLoading(false);
+      return;
+    }
+  }
+
+  if (isRegistration && localFormData.confirmPassword !== undefined) {
+    if (localFormData.password !== localFormData.confirmPassword) {
+      setError('Пароли не совпадают');
+      setLoading(false);
+      return;
+    }
+  }
+
+  try {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    alert(config.successMessage);
+    
+  } catch (err) {
+    setError('Произошла ошибка. Попробуйте позже.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleCancel = () => {
-    navigate('/');
+    navigate('/#');
   };
 
   return (
@@ -153,7 +153,7 @@ export default function Form() {
       )}
 
       {isLogin && (
-        <Link to="forgotPassword" className="forgot-password">Забыли пароль?</Link>
+        <Link to="#/forgotPassword" className="forgot-password">Забыли пароль?</Link>
       )}
 
       {(isForgotPassword || isNoEmail) && (
@@ -163,7 +163,7 @@ export default function Form() {
       )}
       
       {isConfirmEmail && (
-        <Link to="noEmail" className="forgot-password">Мне не пришло письмо</Link>
+        <Link to="#/noEmail" className="forgot-password">Мне не пришло письмо</Link>
       )}
     </form>
   );
